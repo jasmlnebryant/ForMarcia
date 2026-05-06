@@ -1,10 +1,10 @@
-// BottomNav.jsx — persistent bottom tab bar for Marcia's view
-
 import { useLocation, useNavigate } from "react-router-dom";
+import { FileText, Apple, Settings } from "lucide-react";
 
 const tabs = [
-  { path: "/",       icon: "🛒", label: "List"   },
-  { path: "/pantry", icon: "🗄",  label: "Pantry" },
+  { path: "/",        icon: FileText, label: "List"     },
+  { path: "/pantry",  icon: Apple,    label: "Food"     },
+  { path: "/settings",icon: Settings, label: "Settings" },
 ];
 
 export default function BottomNav() {
@@ -13,16 +13,19 @@ export default function BottomNav() {
 
   return (
     <nav className="bottom-nav">
-      {tabs.map((tab) => (
-        <button
-          key={tab.path}
-          className={`nav-item ${location.pathname === tab.path ? "active" : ""}`}
-          onClick={() => navigate(tab.path)}
-        >
-          <span className="nav-icon">{tab.icon}</span>
-          {tab.label}
-        </button>
-      ))}
+      {tabs.map(({ path, icon: Icon, label }) => {
+        const active = location.pathname === path;
+        return (
+          <button
+            key={path}
+            className={`nav-item ${active ? "active" : ""}`}
+            onClick={() => navigate(path)}
+          >
+            <Icon size={24} strokeWidth={active ? 2.5 : 1.8} />
+            {label}
+          </button>
+        );
+      })}
     </nav>
   );
 }

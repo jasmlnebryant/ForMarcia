@@ -1,5 +1,3 @@
-// GroceryList.jsx — Marcia's home screen
-
 export default function GroceryList() {
   const pending = [
     { id: 1, from: "Jasmine", item: "Orange juice" },
@@ -16,7 +14,6 @@ export default function GroceryList() {
     <>
       <div className="page-header">
         <h1>Grocery List</h1>
-        {pending.length > 0 && <span className="badge">{pending.length}</span>}
       </div>
 
       <div className="page" style={{ paddingTop: 16 }}>
@@ -24,7 +21,10 @@ export default function GroceryList() {
         {/* Pending family requests */}
         {pending.length > 0 && (
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <span className="section-label">Requests</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span className="section-label">Requests</span>
+              <span className="badge">{pending.length}</span>
+            </div>
             <div className="card" style={{ display: "flex", flexDirection: "column", gap: 0 }}>
               {pending.map((req) => (
                 <div key={req.id} className="card-row">
@@ -55,7 +55,6 @@ export default function GroceryList() {
           </div>
         </div>
 
-        {/* Add item button */}
         <button className="btn btn-primary">+ Add Item</button>
 
       </div>

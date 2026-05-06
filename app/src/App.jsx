@@ -4,6 +4,7 @@ import BottomNav from "./components/BottomNav";
 import GroceryList from "./pages/GroceryList";
 import Pantry from "./pages/Pantry";
 import FamilyRequest from "./pages/FamilyRequest";
+import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import "./index.css";
 
@@ -14,8 +15,9 @@ function MarciaApp() {
       <Routes>
         <Route path="/"       element={<GroceryList />} />
         <Route path="/pantry" element={<Pantry />} />
-        <Route path="/request" element={<FamilyRequest />} />
-        <Route path="*"       element={<Navigate to="/" />} />
+        <Route path="/request"  element={<FamilyRequest />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="*"         element={<Navigate to="/" />} />
       </Routes>
       <BottomNav />
     </>

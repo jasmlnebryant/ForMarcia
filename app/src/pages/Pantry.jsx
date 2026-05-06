@@ -53,7 +53,7 @@ export default function Pantry() {
             className={`tab ${activeTab === tab ? "active" : ""}`}
             onClick={() => setActiveTab(tab)}
           >
-            {tab === "fridge" ? "🧊 Fridge" : tab === "freezer" ? "❄️ Freezer" : "🗄 Pantry"}
+            {tab === "fridge" ? "Fridge" : tab === "freezer" ? "Freezer" : "Pantry"}
           </button>
         ))}
       </div>
