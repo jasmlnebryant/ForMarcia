@@ -1,6 +1,7 @@
 // Pantry.jsx — Inventory screen with Fridge / Freezer / Pantry tabs
 
 import { useState } from "react";
+import DogDash from "../components/dogs/DogDash";
 
 const mockItems = {
   fridge: [
@@ -59,18 +60,26 @@ export default function Pantry() {
       </div>
 
       <div className="page" style={{ paddingTop: 16 }}>
-        <div className="card" style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-          {items.map((item) => (
-            <div key={item.id} className="card-row">
-              <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 600, marginBottom: 4 }}>{item.name}</div>
-                <span className={expirationClass(item.daysLeft)}>
-                  {expirationLabel(item.daysLeft)}
-                </span>
+        {items.length > 0 ? (
+          <div className="card card-accent-teal" style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            {items.map((item) => (
+              <div key={item.id} className="card-row">
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 600, marginBottom: 4 }}>{item.name}</div>
+                  <span className={expirationClass(item.daysLeft)}>
+                    {expirationLabel(item.daysLeft)}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">
+            <DogDash size={100} />
+            <h3>Nothing here yet</h3>
+            <p>Dash checked — this section is empty. Scan something to get started.</p>
+          </div>
+        )}
       </div>
     </>
   );

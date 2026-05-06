@@ -1,20 +1,36 @@
 /* ForMarcia — Design System */
-/* Inspired by: warm pantry apps, sage green, cream backgrounds, readable typography */
+/* Warm, bubbly, colorful — built for Marcia */
 
 :root {
-  /* Colors */
-  --cream:        #FAF8F4;
+  /* Core palette */
+  --cream:        #FDF8F2;
   --white:        #FFFFFF;
-  --green:        #4A6741;
-  --green-light:  #EEF3ED;
-  --green-mid:    #7A9E72;
+
+  /* Primary green */
+  --green:        #3E8B35;
+  --green-light:  #E6F4E5;
+  --green-mid:    #6DB865;
+
+  /* Accent colors — bubbly & warm */
+  --coral:        #F4705E;
+  --coral-light:  #FEF0EE;
+  --peach:        #F5A84B;
+  --peach-light:  #FEF6EA;
+  --teal:         #48B8B0;
+  --teal-light:   #E8F8F7;
+  --lavender:     #9B83CC;
+  --lavender-light: #F2EEFC;
+
+  /* Expiration */
   --amber:        #F59E0B;
   --amber-light:  #FFFBEB;
-  --red:          #DC2626;
+  --red:          #E03A2E;
   --red-light:    #FEF2F2;
+
+  /* Neutrals */
   --text:         #1C1C1E;
   --text-muted:   #6B7280;
-  --border:       #E8E4DC;
+  --border:       #EAE4DA;
 
   /* Spacing */
   --radius-sm:    8px;
@@ -23,8 +39,8 @@
   --radius-pill:  999px;
 
   /* Shadows */
-  --shadow-sm:    0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md:    0 4px 12px rgba(0,0,0,0.08);
+  --shadow-sm:    0 1px 4px rgba(0,0,0,0.07);
+  --shadow-md:    0 4px 16px rgba(0,0,0,0.09);
 
   /* Typography */
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
@@ -81,7 +97,7 @@ p {
 
 /* ── Layout ── */
 .page {
-  padding: 24px 20px 100px; /* bottom padding for tab bar */
+  padding: 24px 20px 100px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -149,6 +165,11 @@ button:active {
   color: var(--white);
 }
 
+.btn-coral {
+  background: var(--coral);
+  color: var(--white);
+}
+
 .btn-secondary {
   background: var(--green-light);
   color: var(--green);
@@ -195,15 +216,10 @@ input[type="password"] {
   font-family: inherit;
 }
 
-input:focus {
-  border-color: var(--green);
-}
+input:focus { border-color: var(--green); }
+input::placeholder { color: var(--text-muted); }
 
-input::placeholder {
-  color: var(--text-muted);
-}
-
-/* ── Category Tabs (Fridge / Freezer / Pantry) ── */
+/* ── Category Tabs ── */
 .tab-group {
   display: flex;
   gap: 0;
@@ -277,7 +293,7 @@ input::placeholder {
   background: var(--white);
   border-top: 1px solid var(--border);
   display: flex;
-  padding: 8px 0 20px; /* extra bottom for iPhone home bar */
+  padding: 8px 0 20px;
 }
 
 .bottom-nav a, .nav-item {
@@ -303,11 +319,6 @@ input::placeholder {
   color: var(--green);
 }
 
-.nav-icon {
-  font-size: 22px;
-  line-height: 1;
-}
-
 /* ── Empty States ── */
 .empty-state {
   display: flex;
@@ -318,24 +329,7 @@ input::placeholder {
   text-align: center;
 }
 
-.empty-state .empty-icon {
-  font-size: 56px;
-}
-
-/* ── Chip / Tags ── */
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border-radius: var(--radius-pill);
-  font-size: 14px;
-  font-weight: 500;
-  background: var(--green-light);
-  color: var(--green);
-}
-
-/* ── Pending Request Badge ── */
+/* ── Badge ── */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -344,11 +338,32 @@ input::placeholder {
   height: 20px;
   padding: 0 6px;
   border-radius: var(--radius-pill);
-  background: var(--red);
+  background: var(--coral);
   color: var(--white);
   font-size: 12px;
   font-weight: 700;
 }
+
+/* ── Section Labels — rotating accent colors ── */
+.section-label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+}
+
+.section-label.coral    { color: var(--coral); }
+.section-label.teal     { color: var(--teal); }
+.section-label.lavender { color: var(--lavender); }
+.section-label.peach    { color: var(--peach); }
+.section-label.green    { color: var(--green); }
+
+/* ── Colored card accents ── */
+.card-accent-coral    { border-left: 4px solid var(--coral); }
+.card-accent-teal     { border-left: 4px solid var(--teal); }
+.card-accent-lavender { border-left: 4px solid var(--lavender); }
+.card-accent-green    { border-left: 4px solid var(--green); }
 
 /* ── Divider ── */
 .divider {
@@ -357,11 +372,11 @@ input::placeholder {
   border: none;
 }
 
-/* ── Section Label ── */
-.section-label {
+/* ── Dog name tags ── */
+.dog-tag {
   font-size: 13px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
   color: var(--text-muted);
+  text-align: center;
+  margin-top: 4px;
 }
