@@ -1,0 +1,128 @@
+/* ForMarcia — Mobile-first global styles */
+
+:root {
+  --green: #3a7d44;
+  --green-light: #e8f5e9;
+  --yellow: #f59e0b;
+  --yellow-light: #fffbeb;
+  --red: #dc2626;
+  --red-light: #fef2f2;
+  --gray: #6b7280;
+  --gray-light: #f9fafb;
+  --border: #e5e7eb;
+  --text: #111827;
+  --text-muted: #6b7280;
+  --bg: #ffffff;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--gray-light);
+  min-height: 100svh;
+}
+
+#root {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100svh;
+  background: var(--bg);
+}
+
+/* Page layout */
+.page {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.page.center {
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  text-align: center;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+p {
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 16px;
+  color: var(--text);
+  background: var(--bg);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+  border-color: var(--green);
+}
+
+/* Buttons */
+button {
+  padding: 14px 20px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--green);
+  color: white;
+  transition: opacity 0.15s;
+  width: 100%;
+}
+
+button:active {
+  opacity: 0.85;
+}
+
+/* Expiration color indicators */
+.exp-ok    { background: var(--green-light); color: var(--green); }
+.exp-soon  { background: var(--yellow-light); color: var(--yellow); }
+.exp-urgent{ background: var(--red-light); color: var(--red); }
