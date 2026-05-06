@@ -1,36 +1,48 @@
-/* ForMarcia — Mobile-first global styles */
+/* ForMarcia — Design System */
+/* Inspired by: warm pantry apps, sage green, cream backgrounds, readable typography */
 
 :root {
-  --green: #3a7d44;
-  --green-light: #e8f5e9;
-  --yellow: #f59e0b;
-  --yellow-light: #fffbeb;
-  --red: #dc2626;
-  --red-light: #fef2f2;
-  --gray: #6b7280;
-  --gray-light: #f9fafb;
-  --border: #e5e7eb;
-  --text: #111827;
-  --text-muted: #6b7280;
-  --bg: #ffffff;
-  --radius: 12px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.1);
+  /* Colors */
+  --cream:        #FAF8F4;
+  --white:        #FFFFFF;
+  --green:        #4A6741;
+  --green-light:  #EEF3ED;
+  --green-mid:    #7A9E72;
+  --amber:        #F59E0B;
+  --amber-light:  #FFFBEB;
+  --red:          #DC2626;
+  --red-light:    #FEF2F2;
+  --text:         #1C1C1E;
+  --text-muted:   #6B7280;
+  --border:       #E8E4DC;
 
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 16px;
+  /* Spacing */
+  --radius-sm:    8px;
+  --radius-md:    16px;
+  --radius-lg:    24px;
+  --radius-pill:  999px;
+
+  /* Shadows */
+  --shadow-sm:    0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md:    0 4px 12px rgba(0,0,0,0.08);
+
+  /* Typography */
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
   color: var(--text);
-  background: var(--bg);
   -webkit-font-smoothing: antialiased;
 }
 
-* {
+/* Reset */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 body {
-  background: var(--gray-light);
+  background: var(--cream);
   min-height: 100svh;
 }
 
@@ -38,15 +50,41 @@ body {
   max-width: 480px;
   margin: 0 auto;
   min-height: 100svh;
-  background: var(--bg);
+  background: var(--cream);
+  position: relative;
 }
 
-/* Page layout */
+/* ── Typography ── */
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── Layout ── */
 .page {
-  padding: 24px 20px;
+  padding: 24px 20px 100px; /* bottom padding for tab bar */
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 .page.center {
@@ -54,30 +92,86 @@ body {
   justify-content: center;
   min-height: 100svh;
   text-align: center;
+  padding-bottom: 24px;
 }
 
-h1 {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--text);
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 0;
 }
 
-h2 {
-  font-size: 18px;
+/* ── Cards ── */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-row:last-child {
+  border-bottom: none;
+}
+
+/* ── Buttons ── */
+button, .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 24px;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-size: 17px;
   font-weight: 600;
-  color: var(--text);
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  font-family: inherit;
+  width: 100%;
 }
 
-p {
+button:active {
+  opacity: 0.85;
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: var(--green);
+  color: var(--white);
+}
+
+.btn-secondary {
+  background: var(--green-light);
+  color: var(--green);
+}
+
+.btn-ghost {
+  background: transparent;
   color: var(--text-muted);
-  line-height: 1.5;
+  width: auto;
+  padding: 8px 12px;
 }
 
-/* Forms */
-form {
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 14px;
+  width: auto;
+}
+
+/* ── Forms ── */
+.form-group {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 label {
@@ -87,42 +181,187 @@ label {
 }
 
 input[type="text"],
-input[type="email"] {
+input[type="email"],
+input[type="password"] {
   width: 100%;
-  padding: 14px 16px;
+  padding: 16px;
   border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 16px;
+  border-radius: var(--radius-md);
+  font-size: 17px;
   color: var(--text);
-  background: var(--bg);
+  background: var(--white);
   outline: none;
   transition: border-color 0.15s;
+  font-family: inherit;
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus {
+input:focus {
   border-color: var(--green);
 }
 
-/* Buttons */
-button {
-  padding: 14px 20px;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 16px;
+input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ── Category Tabs (Fridge / Freezer / Pantry) ── */
+.tab-group {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tab-group::-webkit-scrollbar { display: none; }
+
+.tab {
+  padding: 10px 20px;
+  font-size: 15px;
   font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
   cursor: pointer;
-  background: var(--green);
-  color: white;
-  transition: opacity 0.15s;
+  white-space: nowrap;
+  width: auto;
+  border-radius: 0;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab.active {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+
+/* ── Expiration Pills ── */
+.exp-ok {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--green-light);
+  color: var(--green);
+}
+
+.exp-soon {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--amber-light);
+  color: var(--amber);
+}
+
+.exp-urgent {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--red-light);
+  color: var(--red);
+}
+
+/* ── Bottom Tab Bar ── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
+  max-width: 480px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding: 8px 0 20px; /* extra bottom for iPhone home bar */
 }
 
-button:active {
-  opacity: 0.85;
+.bottom-nav a, .nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 6px 0;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  width: auto;
+  border-radius: 0;
+  transition: color 0.15s;
 }
 
-/* Expiration color indicators */
-.exp-ok    { background: var(--green-light); color: var(--green); }
-.exp-soon  { background: var(--yellow-light); color: var(--yellow); }
-.exp-urgent{ background: var(--red-light); color: var(--red); }
+.bottom-nav a.active, .nav-item.active {
+  color: var(--green);
+}
+
+.nav-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* ── Empty States ── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.empty-state .empty-icon {
+  font-size: 56px;
+}
+
+/* ── Chip / Tags ── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--green-light);
+  color: var(--green);
+}
+
+/* ── Pending Request Badge ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  background: var(--red);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ── Divider ── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  border: none;
+}
+
+/* ── Section Label ── */
+.section-label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+}

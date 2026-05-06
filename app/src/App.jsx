@@ -1,31 +1,33 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import BottomNav from "./components/BottomNav";
 import GroceryList from "./pages/GroceryList";
 import Pantry from "./pages/Pantry";
 import FamilyRequest from "./pages/FamilyRequest";
 import Login from "./pages/Login";
 import "./index.css";
 
-// Routes Marcia sees when logged in
+// Marcia's full app with bottom nav
 function MarciaApp() {
   return (
-    <Routes>
-      <Route path="/" element={<GroceryList />} />
-      <Route path="/pantry" element={<Pantry />} />
-      <Route path="/request" element={<FamilyRequest />} />
-      <Route path="*" element={<Navigate to="/" />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/"       element={<GroceryList />} />
+        <Route path="/pantry" element={<Pantry />} />
+        <Route path="/request" element={<FamilyRequest />} />
+        <Route path="*"       element={<Navigate to="/" />} />
+      </Routes>
+      <BottomNav />
+    </>
   );
 }
 
-// Decides what to show based on auth state
 function AppRouter() {
   const { user } = useAuth();
 
-  // Still checking Firebase session — show nothing while loading
   if (user === undefined) return null;
 
-  // Family request link — always accessible, no auth needed
+  // Family request route — no auth needed, no nav
   if (window.location.pathname === "/request") {
     return (
       <Routes>
@@ -34,14 +36,9 @@ function AppRouter() {
     );
   }
 
-  // Marcia: logged in → show app, not logged in → show login
-  return user ? (
-    <MarciaApp />
-  ) : (
-    <Routes>
-      <Route path="*" element={<Login />} />
-    </Routes>
-  );
+  // For now, skip login and show Marcia's app directly
+  // TODO: wire up real auth once Firebase Auth is configured
+  return <MarciaApp />;
 }
 
 export default function App() {
