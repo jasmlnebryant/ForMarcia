@@ -17,6 +17,7 @@ function MarciaApp() {
         <Route path="/pantry" element={<Pantry />} />
         <Route path="/request"  element={<FamilyRequest />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/login"    element={<Login />} />
         <Route path="*"         element={<Navigate to="/" />} />
       </Routes>
       <BottomNav />

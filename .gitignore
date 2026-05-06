@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Local working files (not for the repo)
+claude/
+node_modules/
+package.json
+package-lock.json
