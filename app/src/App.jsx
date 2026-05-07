@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { GroceryProvider } from "./context/GroceryContext";
+import { PantryProvider }  from "./context/PantryContext";
 import BottomNav from "./components/BottomNav";
 import GroceryList from "./pages/GroceryList";
 import Pantry from "./pages/Pantry";
@@ -47,9 +49,13 @@ function AppRouter() {
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <AppRouter />
-      </BrowserRouter>
+      <GroceryProvider>
+        <PantryProvider>
+          <BrowserRouter>
+            <AppRouter />
+          </BrowserRouter>
+        </PantryProvider>
+      </GroceryProvider>
     </AuthProvider>
   );
 }

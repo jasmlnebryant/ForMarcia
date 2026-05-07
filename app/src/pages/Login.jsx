@@ -17,17 +17,14 @@ export default function Login() {
         {/* Gracie — small, left */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 4 }}>
           <DogGracie size={88} />
-          <span className="dog-tag">Gracie</span>
         </div>
-        {/* Mako — big, center, slightly raised */}
+        {/* Dash — big, center, slightly raised */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 20 }}>
-          <DogMako size={112} />
-          <span className="dog-tag">Mako</span>
+          <DogDash size={112} />
         </div>
-        {/* Dash — small, right */}
+        {/* Mako — small, right */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 4 }}>
-          <DogDash size={88} />
-          <span className="dog-tag">Dash</span>
+          <DogMako size={88} />
         </div>
       </div>
 

@@ -7,9 +7,10 @@
   --white:        #FFFFFF;
 
   /* Primary green */
-  --green:        #3E8B35;
-  --green-light:  #E6F4E5;
-  --green-mid:    #6DB865;
+  --green:        #86BF86;
+  --green-dark:   #3B623B;
+  --green-light:  #EDF7ED;
+  --green-mid:    #A8D0A8;
 
   /* Accent colors — bubbly & warm */
   --coral:        #F4705E;
@@ -162,7 +163,7 @@ button:active {
 
 .btn-primary {
   background: var(--green);
-  color: var(--white);
+  color: var(--green-dark);
 }
 
 .btn-coral {
@@ -172,7 +173,7 @@ button:active {
 
 .btn-secondary {
   background: var(--green-light);
-  color: var(--green);
+  color: var(--green-dark);
 }
 
 .btn-ghost {
@@ -216,7 +217,7 @@ input[type="password"] {
   font-family: inherit;
 }
 
-input:focus { border-color: var(--green); }
+input:focus { border-color: var(--green-dark); }
 input::placeholder { color: var(--text-muted); }
 
 /* ── Category Tabs ── */
@@ -247,7 +248,7 @@ input::placeholder { color: var(--text-muted); }
 }
 
 .tab.active {
-  color: var(--green);
+  color: var(--green-dark);
   border-bottom-color: var(--green);
 }
 
@@ -259,7 +260,7 @@ input::placeholder { color: var(--text-muted); }
   padding: 3px 10px;
   border-radius: var(--radius-pill);
   background: var(--green-light);
-  color: var(--green);
+  color: var(--green-dark);
 }
 
 .exp-soon {
@@ -316,7 +317,7 @@ input::placeholder { color: var(--text-muted); }
 }
 
 .bottom-nav a.active, .nav-item.active {
-  color: var(--green);
+  color: var(--green-dark);
 }
 
 /* ── Empty States ── */
@@ -357,13 +358,39 @@ input::placeholder { color: var(--text-muted); }
 .section-label.teal     { color: var(--teal); }
 .section-label.lavender { color: var(--lavender); }
 .section-label.peach    { color: var(--peach); }
-.section-label.green    { color: var(--green); }
+.section-label.green    { color: var(--green-dark); }
 
 /* ── Colored card accents ── */
 .card-accent-coral    { border-left: 4px solid var(--coral); }
 .card-accent-teal     { border-left: 4px solid var(--teal); }
 .card-accent-lavender { border-left: 4px solid var(--lavender); }
 .card-accent-green    { border-left: 4px solid var(--green); }
+.card-accent-green-dark { border-left: 4px solid var(--green-dark); }
+
+/* ── Scan spinner ── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.scan-spinner {
+  width: 56px;
+  height: 56px;
+  border: 4px solid var(--green-light);
+  border-top-color: var(--green);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ── Swipe tab animations ── */
+@keyframes slideInFromRight {
+  from { transform: translateX(40px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+@keyframes slideInFromLeft {
+  from { transform: translateX(-40px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+.slide-from-right { animation: slideInFromRight 0.22s ease; }
+.slide-from-left  { animation: slideInFromLeft  0.22s ease; }
 
 /* ── Divider ── */
 .divider {
