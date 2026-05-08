@@ -8,3 +8,7 @@ claude/
 node_modules/
 package.json
 package-lock.json
+
+# Environment variables (API keys — never commit)
+app/.env
+.env

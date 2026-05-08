@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import DogDash from "../components/dogs/DogDash";
-import ScanModal from "../components/ScanModal";
 import { usePantry } from "../context/PantryContext";
 
 const TABS = ["fridge", "freezer", "pantry"];
@@ -21,15 +21,14 @@ function expirationLabel(daysLeft) {
 }
 
 export default function Pantry() {
-  const { items, addScannedItems } = usePantry();
+  const { items } = usePantry();
+  const navigate = useNavigate();
 
   const [activeTab,  setActiveTab]  = useState("fridge");
   const [slideClass, setSlideClass] = useState("");
   const [animKey,    setAnimKey]    = useState(0);
-  const [showScan,   setShowScan]   = useState(false);
 
-  const touchStartX  = useRef(null);
-  const fileInputRef = useRef(null);
+  const touchStartX = useRef(null);
 
   /* ── Tab switching ── */
   function goToTab(tab, direction) {
@@ -59,34 +58,13 @@ export default function Pantry() {
     else if (delta > 0 && curr > 0)          goToTab(TABS[curr - 1], "prev");
   }
 
-  /* ── Scan ── */
-  function handleScanClick() {
-    fileInputRef.current.click();
-  }
-
-  function handleFileSelected(e) {
-    if (!e.target.files?.length) return;
-    e.target.value = ""; // reset so same file can be re-selected
-    setShowScan(true);
-  }
-
   const currentItems = items[activeTab];
 
   return (
     <>
-      {/* Hidden camera input */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        capture="environment"
-        style={{ display: "none" }}
-        onChange={handleFileSelected}
-      />
-
       <div className="page-header">
         <h1>Food</h1>
-        <button className="btn btn-primary btn-sm" onClick={handleScanClick}>
+        <button className="btn btn-primary btn-sm" onClick={() => navigate("/scan")}>
           + Scan
         </button>
       </div>
@@ -134,13 +112,6 @@ export default function Pantry() {
         </div>
       </div>
 
-      {/* Scan modal */}
-      {showScan && (
-        <ScanModal
-          onClose={() => setShowScan(false)}
-          onConfirm={addScannedItems}
-        />
-      )}
     </>
   );
 }
