@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { GroceryProvider } from "./context/GroceryContext";
 import { PantryProvider }  from "./context/PantryContext";
 import BottomNav from "./components/BottomNav";
+import SplashScreen from "./components/SplashScreen";
 import GroceryList from "./pages/GroceryList";
 import Pantry from "./pages/Pantry";
 import Scan from "./pages/Scan";
@@ -15,15 +17,17 @@ import "./index.css";
 function MarciaApp() {
   return (
     <>
-      <Routes>
-        <Route path="/"         element={<GroceryList />} />
-        <Route path="/pantry"   element={<Pantry />} />
-        <Route path="/scan"     element={<Scan />} />
-        <Route path="/request"  element={<FamilyRequest />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/login"    element={<Login />} />
-        <Route path="*"         element={<Navigate to="/" />} />
-      </Routes>
+      <div>
+        <Routes>
+          <Route path="/"         element={<GroceryList />} />
+          <Route path="/pantry"   element={<Pantry />} />
+          <Route path="/scan"     element={<Scan />} />
+          <Route path="/request"  element={<FamilyRequest />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/login"    element={<Login />} />
+          <Route path="*"         element={<Navigate to="/" />} />
+        </Routes>
+      </div>
       <BottomNav />
     </>
   );
@@ -49,11 +53,14 @@ function AppRouter() {
 }
 
 export default function App() {
+  const [splashDone, setSplashDone] = useState(false);
+
   return (
     <AuthProvider>
       <GroceryProvider>
         <PantryProvider>
           <BrowserRouter>
+            {!splashDone && <SplashScreen onDone={() => setSplashDone(true)} />}
             <AppRouter />
           </BrowserRouter>
         </PantryProvider>

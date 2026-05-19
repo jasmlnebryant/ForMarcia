@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DogGracie from "../components/dogs/DogGracie";
 import { useGrocery } from "../context/GroceryContext";
+import SwipeableRow from "../components/SwipeableRow";
 
 export default function GroceryList() {
   const {
@@ -10,11 +11,25 @@ export default function GroceryList() {
     acceptRequest,
     dismissRequest,
     removeConfirmed,
+    clearConfirmed,
     addItems,
   } = useGrocery();
 
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [newItems, setNewItems]         = useState([{ item: "", qty: "" }]);
+  const [showAddModal,    setShowAddModal]    = useState(false);
+  const [confirmingClear, setConfirmingClear] = useState(false);
+  const [newItems, setNewItems]               = useState([{ item: "", qty: "" }]);
+  const [vvHeight, setVvHeight]               = useState(() => window.visualViewport?.height ?? window.innerHeight);
+
+  // Lift sheet above keyboard when it opens
+  useEffect(() => {
+    if (!showAddModal) return;
+    function onResize() {
+      setVvHeight(window.visualViewport?.height ?? window.innerHeight);
+    }
+    window.visualViewport?.addEventListener("resize", onResize);
+    onResize();
+    return () => window.visualViewport?.removeEventListener("resize", onResize);
+  }, [showAddModal]);
 
   /* ── Add Item modal ── */
   function handleAddRow() {
@@ -45,7 +60,13 @@ export default function GroceryList() {
   const isEmpty = pending.length === 0 && confirmed.length === 0;
 
   return (
-    <>
+    <div style={{
+      display: "flex", flexDirection: "column", width: "100%", height: "100svh", overflow: "hidden",
+      background:
+        "linear-gradient(rgba(253,248,242,0.92), rgba(253,248,242,0.92)), " +
+        "url('/doodles-bg.jpg') center / 600px auto repeat, " +
+        "var(--cream)",
+    }}>
       <div className="page-header">
         <div>
           <p style={{ fontSize: 14, color: "var(--green)", marginBottom: 2 }}>Good morning!</p>
@@ -53,7 +74,7 @@ export default function GroceryList() {
         </div>
       </div>
 
-      <div className="page" style={{ paddingTop: 16 }}>
+      <div className="page" style={{ paddingTop: 16, flex: 1, overflowY: "auto", paddingBottom: "calc(80px + env(safe-area-inset-bottom, 0px))" }}>
 
         {/* ── Pending requests ── */}
         {pending.length > 0 && (
@@ -93,22 +114,33 @@ export default function GroceryList() {
         {/* ── Your List ── */}
         {!isEmpty && (
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <span className="section-label green">Your List</span>
             {confirmed.length > 0 && (
-              <div className="card card-accent-green" style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+              <button
+                className="btn btn-ghost btn-sm"
+                onClick={() => setConfirmingClear(true)}
+                style={{ color: "var(--coral)", fontWeight: 600, padding: "4px 8px" }}
+              >
+                Clear All
+              </button>
+            )}
+          </div>
+            {confirmed.length > 0 && (
+              <div className="card card-accent-green" style={{ display: "flex", flexDirection: "column", gap: 0, padding: 0, overflow: "hidden" }}>
                 {confirmed.map((item) => (
-                  <div key={item.id} className="card-row">
-                    <div style={{ flex: 1 }}>
-                      <span style={{ fontWeight: 500 }}>{item.item}</span>
-                      {item.qty && (
-                        <span style={{ fontSize: 13, color: "var(--text-muted)", marginLeft: 8 }}>× {item.qty}</span>
-                      )}
-                      {item.from && (
-                        <div style={{ fontSize: 13, color: "var(--text-muted)" }}>from {item.from}</div>
-                      )}
+                  <SwipeableRow key={item.id} onDelete={() => removeConfirmed(item.id)}>
+                    <div className="card-row" style={{ padding: "14px 16px" }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: 500 }}>{item.item}</div>
+                        {(item.qty || item.from) && (
+                          <div style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 2 }}>
+                            {[item.qty ? `×${item.qty}` : null, item.from ? `from ${item.from}` : null].filter(Boolean).join(" · ")}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    <button className="btn btn-ghost btn-sm" onClick={() => removeConfirmed(item.id)}>✕</button>
-                  </div>
+                  </SwipeableRow>
                 ))}
               </div>
             )}
@@ -141,19 +173,19 @@ export default function GroceryList() {
           />
           <div style={{
             position: "fixed",
-            bottom: 0,
+            bottom: window.innerHeight - vvHeight,
             left: "50%",
             transform: "translateX(-50%)",
             width: "100%",
             maxWidth: 480,
             background: "var(--white)",
             borderRadius: "24px 24px 0 0",
-            padding: "24px 20px 44px",
+            padding: "24px 20px 32px",
             zIndex: 101,
             display: "flex",
             flexDirection: "column",
             gap: 16,
-            maxHeight: "85svh",
+            maxHeight: vvHeight * 0.92,
             overflowY: "auto",
           }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -214,6 +246,36 @@ export default function GroceryList() {
           </div>
         </>
       )}
-    </>
+
+      {confirmingClear && (
+        <>
+          <div onClick={() => setConfirmingClear(false)}
+            style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 200 }} />
+          <div style={{
+            position: "fixed", top: "50%", left: "50%",
+            transform: "translate(-50%, -50%)", zIndex: 201,
+            width: "calc(100% - 48px)", maxWidth: 320,
+            background: "var(--white)", borderRadius: 24,
+            padding: "24px 20px",
+            boxShadow: "0 12px 32px rgba(0,0,0,0.18)",
+            display: "flex", flexDirection: "column", gap: 14, textAlign: "center",
+          }}>
+            <h2 style={{ fontFamily: '"Lora", Georgia, serif', fontSize: 22, fontWeight: 700 }}>Are you sure?</h2>
+            <p style={{ margin: 0, color: "var(--text-muted)", fontSize: 14, lineHeight: 1.5 }}>
+              {`This will clear all ${confirmed.length} item${confirmed.length === 1 ? "" : "s"} from your list.`}
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 6 }}>
+              <button className="btn btn-coral" onClick={() => { clearConfirmed(); setConfirmingClear(false); }}>
+                Yes, clear list
+              </button>
+              <button className="btn btn-ghost" onClick={() => setConfirmingClear(false)}
+                style={{ color: "var(--text-muted)", fontWeight: 600 }}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
   );
 }

@@ -45,6 +45,10 @@ export function GroceryProvider({ children }) {
     setConfirmed(prev => prev.filter(item => item.id !== id));
   }
 
+  function clearConfirmed() {
+    setConfirmed([]);
+  }
+
   function addItems(newItems) {
     const now = Date.now();
     const added = newItems
@@ -68,6 +72,7 @@ export function GroceryProvider({ children }) {
       acceptRequest,
       dismissRequest,
       removeConfirmed,
+      clearConfirmed,
       addItems,
     }}>
       {children}

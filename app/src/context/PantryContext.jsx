@@ -23,6 +23,13 @@ export function PantryProvider({ children }) {
 
   const nextId = useRef(20);
 
+  function removeItems(location, name) {
+    setItems(prev => ({
+      ...prev,
+      [location]: prev[location].filter(item => item.name !== name),
+    }));
+  }
+
   function addScannedItems(newItems) {
     setItems(prev => {
       const updated = {
@@ -41,8 +48,29 @@ export function PantryProvider({ children }) {
     });
   }
 
+  // Sort each section by soonest expiring first
+  function sortByExpiry(a, b) {
+    if (a.daysLeft === null && b.daysLeft === null) return 0;
+    if (a.daysLeft === null) return 1;   // nulls sink to the bottom
+    if (b.daysLeft === null) return -1;
+    return a.daysLeft - b.daysLeft;
+  }
+
+  const sortedItems = {
+    fridge:  [...items.fridge].sort(sortByExpiry),
+    freezer: [...items.freezer].sort(sortByExpiry),
+    pantry:  [...items.pantry].sort(sortByExpiry),
+  };
+
+  function updateItem(location, id, updates) {
+    setItems(prev => ({
+      ...prev,
+      [location]: prev[location].map(item => item.id === id ? { ...item, ...updates } : item),
+    }));
+  }
+
   return (
-    <PantryContext.Provider value={{ items, addScannedItems }}>
+    <PantryContext.Provider value={{ items: sortedItems, addScannedItems, removeItems, updateItem }}>
       {children}
     </PantryContext.Provider>
   );

@@ -35,7 +35,7 @@
 
   /* Spacing */
   --radius-sm:    8px;
-  --radius-md:    16px;
+  --radius-md:    18px;
   --radius-lg:    24px;
   --radius-pill:  999px;
 
@@ -44,7 +44,7 @@
   --shadow-md:    0 4px 16px rgba(0,0,0,0.09);
 
   /* Typography */
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 18px;
   line-height: 1.5;
   color: var(--text);
@@ -73,6 +73,7 @@ body {
 
 /* ── Typography ── */
 h1 {
+  font-family: "Lora", "Book Antiqua", Georgia, serif;
   font-size: 28px;
   font-weight: 700;
   color: var(--text);
@@ -253,6 +254,16 @@ input::placeholder { color: var(--text-muted); }
 }
 
 /* ── Expiration Pills ── */
+.exp-unknown {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: #EBEBEB;
+  color: #888;
+}
+
 .exp-ok {
   display: inline-block;
   font-size: 12px;
@@ -294,7 +305,7 @@ input::placeholder { color: var(--text-muted); }
   background: var(--white);
   border-top: 1px solid var(--border);
   display: flex;
-  padding: 8px 0 20px;
+  padding: 8px 0 max(20px, env(safe-area-inset-bottom));
 }
 
 .bottom-nav a, .nav-item {
@@ -360,14 +371,35 @@ input::placeholder { color: var(--text-muted); }
 .section-label.peach    { color: var(--peach); }
 .section-label.green    { color: var(--green-dark); }
 
-/* ── Colored card accents ── */
-.card-accent-coral    { border-left: 4px solid var(--coral); }
-.card-accent-teal     { border-left: 4px solid var(--teal); }
-.card-accent-lavender { border-left: 4px solid var(--lavender); }
-.card-accent-green    { border-left: 4px solid var(--green); }
-.card-accent-green-dark { border-left: 4px solid var(--green-dark); }
+/* ── Colored card accents — full border + rgba glow ── */
+.card-accent-coral {
+  border: 1.5px solid var(--coral);
+  box-shadow: 0 0 0 6px rgba(244,112,94,0.10), 0 4px 18px rgba(244,112,94,0.14);
+}
+.card-accent-teal {
+  border: 1.5px solid var(--teal);
+  box-shadow: 0 0 0 6px rgba(72,184,176,0.10), 0 4px 18px rgba(72,184,176,0.14);
+}
+.card-accent-lavender {
+  border: 1.5px solid var(--lavender);
+  box-shadow: 0 0 0 6px rgba(155,131,204,0.10), 0 4px 18px rgba(155,131,204,0.14);
+}
+.card-accent-green {
+  border: 1.5px solid var(--green);
+  box-shadow: 0 0 0 6px rgba(134,191,134,0.10), 0 4px 18px rgba(134,191,134,0.14);
+}
+.card-accent-peach {
+  border: 1.5px solid var(--peach);
+  box-shadow: 0 0 0 6px rgba(245,168,75,0.10), 0 4px 18px rgba(245,168,75,0.14);
+}
 
 /* ── Scan spinner ── */
+/* ── Splash screen ── */
+@keyframes splashPop {
+  from { opacity: 0; transform: translateY(10px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
